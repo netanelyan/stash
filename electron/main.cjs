@@ -40,7 +40,7 @@ function iconPath() {
 async function start() {
   config.init(app.getPath('userData'));
   const cfg = config.get();
-  const root = cfg.vaultRoot || vault.defaultRoot();
+  const root = cfg.vaultRoot || vault.defaultRoot(app.getPath('documents'));
   await vault.setRoot(root);
   config.patch({ vaultRoot: vault.getRoot() });
   await vault.scan();

@@ -12,8 +12,12 @@ const SNAPSHOT_THROTTLE_MS = 60 * 1000;
 
 let root = null;
 
-function defaultRoot() {
-  return path.join(os.homedir(), 'Documents', 'Stash');
+// documentsDir should come from Electron's app.getPath('documents'), which
+// follows Windows folder redirection: if Documents has been moved into
+// OneDrive, the vault goes there and syncs, instead of landing in a stray
+// literal %USERPROFILE%\Documents that nothing syncs.
+function defaultRoot(documentsDir) {
+  return path.join(documentsDir || path.join(os.homedir(), 'Documents'), 'Stash');
 }
 
 function getRoot() {

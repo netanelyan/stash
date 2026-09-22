@@ -62,6 +62,12 @@ written.
 
 ## Things I am less sure about
 
+- **Syncing the vault is left entirely to the folder.** Stash has no merge, no
+  conflict resolution and no awareness of a sync client; if OneDrive or Dropbox
+  drops a conflict copy into the vault, it simply appears as another prompt.
+  That is the honest consequence of "prompts are just files", but it means
+  editing the same prompt on two machines at once can strand an edit in a second
+  file.
 - **`fs.watch` with `{ recursive: true }`** is solid on a local NTFS folder. On
   a network share, or a folder aggressively synced by OneDrive or Dropbox, it
   can miss events or fire storms of them. If that bites, the fallback is a
