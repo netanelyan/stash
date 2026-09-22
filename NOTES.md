@@ -68,9 +68,11 @@ written.
   That is the honest consequence of "prompts are just files", but it means
   editing the same prompt on two machines at once can strand an edit in a second
   file.
-- **`fs.watch` with `{ recursive: true }`** is solid on a local NTFS folder. On
+- **`fs.watch` with `{ recursive: true }`** is solid on a local NTFS folder, and
+  I checked it on a Google Drive streaming volume too (events fire, and
+  rename-over-existing works, so autosave stays atomic there). On
   a network share, or a folder aggressively synced by OneDrive or Dropbox, it
-  can miss events or fire storms of them. If that bites, the fallback is a
+  can still miss events or fire storms of them. If that bites, the fallback is a
   periodic rescan; I did not add one speculatively.
 - **The 1500ms flush timeout on window close.** If the renderer were wedged mid
   save, the window would hide (or the app quit) anyway after 1.5s. In practice

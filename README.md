@@ -91,6 +91,10 @@ every machine at it:
    same OneDrive account, the default is already that folder and there is
    nothing to change.
 
+Set the folder on each machine rather than assuming the path matches: Google
+Drive's letter (`G:` here) and your Windows username can both differ between
+machines.
+
 What syncs and what does not:
 
 - **Syncs:** every prompt, plus `.stash/history` (snapshots are keyed on the
@@ -108,9 +112,21 @@ Three things to know:
   next to yours (`untitled-LAPTOP.md` or similar), which then shows up in the
   tree as a separate prompt. Let one machine finish and sync before picking the
   same prompt up on the other.
-- On OneDrive with Files On-Demand, mark the vault folder **Always keep on this
-  device**. Stash reads every prompt at startup to build its index, and
-  cloud-only placeholders make that slow, or impossible offline.
+- Keep the vault available offline. Stash reads every prompt at startup to
+  build its index, and cloud-only placeholder files make that slow, or
+  impossible with no connection. On OneDrive that is right-click -> **Always
+  keep on this device**; on Google Drive for desktop in streaming mode it is
+  right-click -> **Offline access** -> **Available offline**.
+
+### Google Drive specifically
+
+Google Drive for desktop in streaming mode mounts a virtual drive (`G:\My
+Drive`), which is not a normal NTFS volume, so it is worth saying that the two
+filesystem behaviours Stash depends on were checked there and both hold:
+`rename` over an existing file is honoured (autosave stays atomic) and
+`fs.watch` with `{ recursive: true }` fires, so a prompt arriving from the other
+machine shows up in the tree without a restart. Mirror mode is a plain local
+folder and is fine too.
 
 ## File format
 
